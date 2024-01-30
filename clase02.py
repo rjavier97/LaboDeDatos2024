@@ -118,13 +118,18 @@ print(cuantas_materias(6))
 
 def materias_cuatrimestre(nombre_archivo, n):
     lista = []
+    lista_diccionarios = []
     with open(nombre_archivo, 'rt') as f :
         filas = csv.reader(f)
         encabezado = next(filas)
         for fila in filas :
             registro = dict(zip(encabezado, fila))  # armo el diccionario de cada fila
             lista.append(registro)                  # lo agrego a la lista
-    return lista 
+        for i in lista :
+            if i['Cuatrimestre'] == str(n) :
+                lista_diccionarios.append(i) 
+        return lista_diccionarios
+                
     
             
     
