@@ -1,0 +1,57 @@
+--------------------------Funcion Pertenece -------------------------
+Si solo se necesita comprobar si substring es una parte de string, es mejor usar el operador in: 
+>>> 'Py' in 'Python'
+True
+
+--------------------------Funcion Cantidad de Apariciones -------------------------
+s.count(x)
+número total de ocurrencias de x en s
+
+--------------------------Método list(reversed(a)) -------------------------  when a = una lista
+Ejemplo:
+>>> list(reversed([1,2,3,4,5]))
+[5,4,3,2,1]
+
+--------------------------Funcion eliminar elem por indice de lista y retornar ese valor -------------------------
+s.pop() o s.pop(i)    ## si se usa s.pop() a continuacion se retorna el ultimo elemento, y se lo elimina de la lista
+Retorna el elemento en la posición indicada por i, y a la vez lo elimina de la secuencia s
+Ejemplo: 
+>>> c = ['b, 'c' , 'd' , 'a']   
+>>> c.pop(2)
+'d'
+>>> c 
+['b', 'c', 'a']
+ 
+---------------------Funcion eliminar primer elemento de s tal que s[i] sea igual a x  ------------------
+s.remove(x)
+Ejemplo: 
+>>> c = ['b', 'c' , 'd' , 'a']   
+>>> c.remove('d')
+>>> c 
+['b', 'c', 'a']
+
+---------------------Funcion añade x al final de la secuencia  ------------------------------
+s.append(x)
+Ejemplo: 
+>>> c = ['b', 'c' , 'd' , 'a']   
+>>> c.append('f')
+>>> c
+['b', 'c' , 'd' , 'a', 'f']
+
+---------------------Funcion borrar todos los elementos de una lista  ------------------------------
+s.clear()
+
+------------------Funcion inserta x en s en la posición indicada por el índice i, luego s tiene un elem mas -------------
+s.insert(i, x)
+Ejemplo:
+>>> c = ['a','b','c']
+>>> c.insert(1,'e')
+>>> c
+['a','e','b','c']
+
+
+
+
+
+
+

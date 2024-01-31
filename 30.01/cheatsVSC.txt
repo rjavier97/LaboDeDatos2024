@@ -1,0 +1,14 @@
+1- Para abrir varios archivos sin que se cierre la pestaña actual, hacer doble click en el nombre del archivo para fijarlo
+2- Todos los comandos: Ctrl+Shift+P
+3- Para Buscar alguna palabra, Ctrl+F 
+4- Nueva terminal: Ctrl+Shift+ñ 
+5- Para comentar varias lineas de codigo: Seleccionar las lineas y apretar Ctrl+K+C
+6- Para descomentar varias lineas de codigo: Seleccionar las lineas y apretar Ctrl+K+U
+7- Para tabular a la derecha un codigo: Apretar Tab
+8- Para tabular a la izquierda un codigo: Apretar Ctrl+Tab
+9- Para seleccionar una sola linea: Ctrl + L
+10- Para ir seleccionando letra por letra: Shift + Flecha Derecha   o  Shift Flecha Izquierda
+11- Para seleccionar todas las lineas: Ctrl + A
+
+--A tener en cuenta: alt+29= ↔ , alt+26= → , alt+27= ←, alt+142= Ž 
+--Otros simbolos: ℤ , ℝ , ∧ , ∨ , ¬ , ⇔, ∀, ∃, ∃! , ≠ , ≤ , ≥ , ∈ , funcionTecho: ⌈ ⌉ , funcionPiso: ⌊  ⌋

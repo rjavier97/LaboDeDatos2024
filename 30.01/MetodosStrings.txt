@@ -1,0 +1,93 @@
+--------------------------Método find y rfind -------------------------
+find() y rfind().
+Cada uno retorna la posición en la que se encuentre la substring. 
+find() retorna la posición de la primera similitud de la substring
+rfind() retorna la última posición de la similitud de la substring.
+Si el substring no es encontrado retorna -1.
+Ejemplo:
+>>> cadenaDeTexto = "Es peor cometer una injusticia que padecerla porque quien la comete se convierte en injusto y quien la padece no."
+>>> string.find('quien')
+52
+>>> string.rfind('quien')
+94
+
+--------------------------Método str.join(lista) -------------------------
+El método str.join(iterable) es usado para unir todos los elementos de un iterable con un espefico string str in Python. 
+Si, el iterable no contiene ningún valor en los strings, Esto conduce a un TypeError exception.
+>>> ":".join(["freeCodeCamp", "es", "divertido"])
+freeCodeCamp:es:divertido
+>>> "".join(["perro","gato"])
+perrogato
+
+--------------------------Método str.split(sep=None, maxsplit=- 1) -------------------------
+Retorna una lista con las palabras que componen la cadena de caracteres original, usando como separador el valor de sep. 
+Si se utiliza el parámetro maxsplit, se realizan como máximo maxsplit divisiones 
+(por tanto, la lista resultante tendrá maxsplit+1 elementos). 
+Si no se especifica maxsplit o se pasa con valor -1, entonces no hay límite al número de divisiones a realizar 
+(se harán todas las que se puedan).
+El parámetro sep puede contener más de un carácter (por ejemplo, '1<>2<>3'.split('<>') retorna ['1', '2', '3']). 
+Dividir una cadena vacía con un separador determinado retornará [''].
+Ejemplos:
+>>> '1,2,3'.split(',')
+['1', '2', '3']
+>>> '1,2,3'.split(',', maxsplit=1)
+['1', '2,3']
+>>> '1,2,,3,'.split(',')
+['1', '2', '', '3', '']
+
+--------------------------Método list(reversed(a)) -------------------------  when a = una lista
+Ejemplo:
+>>> list(reversed([1,2,3,4,5]))
+[5,4,3,2,1]
+
+--------------------------Método str.isspace() -------------------------
+Retorna True si todos los caracteres de la cadena son espacios en blanco 
+y hay, al menos, un carácter, en caso contrario, retorna False.
+
+--------------------------Metodo str.count(sub[, start[, end]]) -------------------------
+Retorna el número de ocurrencias no solapadas de la cadena sub en el rango [start, end]. 
+Los parámetros opcionales start y end se interpretan como en una expresión de segmento.
+Si sub está vacío, devuelve el número de cadenas vacías entre caracteres, que es la longitud de la cadena más uno.
+
+--------------------------Método str.lstrip([chars]) -------------------------
+Retorna una copia de la cadena, eliminado determinados caracteres si se encuentren al principio. 
+El parámetro chars especifica el conjunto de caracteres a eliminar. 
+Si se omite o si se especifica None, se eliminan todos los espacios en blanco
+>>> '   spacious   '.lstrip()
+'spacious   '
+
+--------------------------Método str.strip([chars]) -------------------------
+Retorna una copia de la cadena con los caracteres indicados eliminados, 
+tanto si están al principio como al final de la cadena. 
+El parámetro opcional chars es una cadena que especifica el conjunto de caracteres a eliminar. 
+Si se omite o se usa None, se eliminan los caracteres de espacio en blanco
+>>> '   spacious   '.strip()
+'spacious'
+>>> 'www.example.com'.strip('cmowz.')
+'example'
+
+--------------------------Método str.rsplit(sep=None, maxsplit=- 1) -------------------------
+Retorna una lista con las palabras que componen la cadena de caracteres original, 
+usando como separador el valor de sep. Si se utiliza el parámetro maxsplit, 
+se realizan como máximo maxsplit divisiones, retornando los que están más a la derecha. 
+Si no se especifica sep o se pasa con valor None, se usa como separador cualquier carácter de espacio en blanco. 
+Si no contamos la diferencia de empezar las divisiones desde la derecha, 
+el comportamiento de este método rsplit() es equivalente al de split(), que se describe con detalle más adelante.
+
+--------------------------Método str.islower() -------------------------
+Retorna True si todos los caracteres de la cadena que tengan formas en mayúsculas y minúsculas están en minúsculas 
+y hay, al menos, un carácter de ese tipo, en caso contrario, retorna False.
+
+--------------------------Método str.isupper() -------------------------
+Retorna True si todos los caracteres de la cadena que tengan formas en mayúsculas y minúsculas están en mayúsculas 
+y hay, al menos, un carácter de ese tipo, en caso contrario, retorna False.
+
+--------------------------Método str.lower() -------------------------
+Retorna una copia de la cadena de caracteres con todas las letras en minúsculas.
+
+--------------------------Método str.upper() -------------------------
+Retorna una copia de la cadena de caracteres con todas las letras en mayusculas.
+
+--------------------------Método str.replace(old, new[, count]) -------------------------
+Retorna una copia de la cadena con todas las ocurrencias de la cadena old sustituidas por new. 
+Si se utiliza el parámetro count, solo se cambian las primeras count ocurrencias

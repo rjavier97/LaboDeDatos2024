@@ -1,0 +1,5 @@
+1 String = str
+2 division entera:(a // b), resto de division:(a % b) 
+3 En la terminal: 1: import importlib, 2: importlib.reload(nombre de la funcion)
+4 Si no hay un return, la funcion devuelve -> None: (ej1 a), tambien puede no escribirse nada como valor de retorno (ej1 b)
+5 En Python, se puede utilizar la función type() para conocer el tipo de dato de una variable o valor en tiempo de ejecución
