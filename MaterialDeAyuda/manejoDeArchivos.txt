@@ -1,6 +1,11 @@
 archivo = open(”PATH AL ARCHIVO”, MODO, ENCODING)
 ▶ Algunos de los modos posibles son: escritura (w), lectura (r), texto (t - es el default)
 ▶ El encoding se refiere a como está codificado el archivo: UTF-8 o ASCII son los más frecuentes.
+Cuando el archivo no se puede leer o acceder, escribir el encoding para solucionarlo.
+Ejemplo:
+f = open('datame.txt', 'rt', encoding="utf-8")
+
+
 
 Operaciones básicas--------------------------------------------------------------
 ▶ Lectura de contenido:--------

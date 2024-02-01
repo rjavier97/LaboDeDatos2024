@@ -1,12 +1,6 @@
-# -*- coding: utf-8 -*-
-"""
-Editor de Spyder
-
-Este es un archivo temporal.
-"""
-
-"""f9 para correr linea por linea,
-shift + enter para correr linea indicada"""
+# Spyder
+# f9 para correr linea por linea,
+# shift + enter para correr linea indicada
 
 """Ejercicio"""
 """
@@ -115,7 +109,7 @@ def cuantas_materias(n):
         return cantidad_materias
 print(cuantas_materias(6)) 
 """
-
+import csv
 def materias_cuatrimestre(nombre_archivo, n):
     lista = []
     with open(nombre_archivo, 'rt') as f :
@@ -127,27 +121,3 @@ def materias_cuatrimestre(nombre_archivo, n):
     return lista 
     
             
-    
-    
-    
-    
-
-    
-     
-
-
-        
-        
-    
-
-    
-    
-        
-
-        
-            
-            
-        
-   
-
-
