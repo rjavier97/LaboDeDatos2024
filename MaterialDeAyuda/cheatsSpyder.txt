@@ -1,0 +1,24 @@
+---------Comentarios-------------
+1-- Para comentar/descomentar lineas (como en VSC): Ctrl + 1
+2-- Para comentar en forma de bloque: Seleccionar lineas y presionar Ctrl + 4
+3-- Para descomentar en forma de bloque: Ctrl + 5
+
+---------Resaltar lineas---------
+4-- Ir al inicio/final de la línea: Inicio / Fin
+5-- Resalte al inicio/final de la línea: Mayús + Inicio/Fin	
+
+---------Mover lineas / texto------------
+6-- Mover la línea actual hacia arriba/abajo: Alt + Arriba/Abajo
+7-- Texto a la derecha: Resaltar líneas + Tab
+8-- Texto a la izquierda: Resaltar lineas + Mayus + Tab
+9-- Eliminar linea: Ctrl + D
+
+---------Abrir/Guardar archivo---
+10-- Abrir nuevo archivo: Ctrl + N	
+11-- Abrir archivo existente: Ctrl + O
+12-- Guarde todos los archivos abiertos: Ctrl + Alt + S
+
+---------Ejecutar----------------
+13-- Ejecutar archivo: F5
+14-- Ejecutar el código seleccionado: Resalte el código+Ctrl+Intro o F9
+
