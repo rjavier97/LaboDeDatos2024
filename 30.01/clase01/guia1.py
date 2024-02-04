@@ -53,6 +53,21 @@ def traductorNeutro(frase)->str:
     frase = " ".join(listaPalabras)
     return frase
 # print(traductorNeutro('todos somos programadores'))
+
+# # Ejercicio 4 ------------------------------
+def es_par(n)->bool:
+    res = False
+    if n % 2 == 0:
+        res = True
+    return res 
+# es_par(8)
+
+# # Ejercicio 5 ------------------------------
+
+
+
+    
+
         
 
             
