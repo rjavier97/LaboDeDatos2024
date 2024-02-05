@@ -20,5 +20,6 @@
 
 ---------Ejecutar----------------
 13-- Ejecutar archivo: F5
-14-- Ejecutar el código seleccionado: Resalte el código+Ctrl+Intro o F9
+14-- Ejecutar el código seleccionado: Resaltar+Shift+Enter
+15-- Ejecutar linea por linea: F9
 
