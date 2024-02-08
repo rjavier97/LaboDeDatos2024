@@ -17,7 +17,7 @@ def main():
     print("# Creamos/Importamos los datasets que vamos a utilizar en este programa")
     print("# =============================================================================")
 
-    carpeta = "~/Downloads/clase-08/"
+    carpeta = "~\Documents\EXACTASLCD-git\LaboDeDatos2024\06.02\clase06\envivo"
     
     # Ejercicios AR-PROJECT, SELECT, RENAME
     empleado       = get_empleado()
