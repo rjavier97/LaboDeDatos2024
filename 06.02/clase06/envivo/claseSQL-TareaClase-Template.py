@@ -8,6 +8,7 @@ Fecha  : 2023-03-07
 
 # Importamos bibliotecas
 import pandas as pd
+import csv
 from inline_sql import sql, sql_val
 
 def main():
@@ -17,7 +18,7 @@ def main():
     print("# Creamos/Importamos los datasets que vamos a utilizar en este programa")
     print("# =============================================================================")
 
-    carpeta = "~\Documents\EXACTASLCD-git\LaboDeDatos2024\06.02\clase06\envivo"
+    carpeta = ""
     
     # Ejercicios AR-PROJECT, SELECT, RENAME
     empleado       = get_empleado()
@@ -77,14 +78,16 @@ def main():
     # -----------
     consigna    = "b.- Listar Sexo de empleados "
     consultaSQL = """
-                   
+                   SELECT DISTINCT Sexo
+                   FROM empleado
                   """
     imprimirEjercicio(consigna, [empleado], consultaSQL, sql^consultaSQL)    
 
     # -----------
     consigna    = "c.- Listar Sexo de empleados (sin DISTINCT)"
     consultaSQL = """
-                   
+                   SELECT Sexo
+                   FROM empleado
                   """
     imprimirEjercicio(consigna, [empleado], consultaSQL, sql^consultaSQL)    
 
@@ -95,14 +98,18 @@ def main():
     
     consigna    = "a.- Listar de EMPLEADO sólo aquellos cuyo sexo es femenino"
     consultaSQL = """
-                   
+                   SELECT * 
+                   FROM empleado
+                   WHERE Sexo='F'
                   """
     imprimirEjercicio(consigna, [empleado], consultaSQL, sql^consultaSQL)    
 
     # -----------
     consigna    = "b.- Listar de EMPLEADO aquellos cuyo sexo es femenino y su salario es mayor a $15.000"
     consultaSQL = """
-                   
+                   SELECT *
+                   FROM empleado
+                   WHERE Sexo='F' and Salario>15000
                   """
     imprimirEjercicio(consigna, [empleado], consultaSQL, sql^consultaSQL)    
     
@@ -113,7 +120,8 @@ def main():
     
     consigna    = """a.- Listar DNI y Salario de EMPLEADO, y renombrarlos como id e Ingreso"""
     consultaSQL = """
-                   
+                   SELECT DNI as ID, Salario as Ingreso
+                   FROM empleado
                   """
     
     imprimirEjercicio(consigna, [empleado], consultaSQL, sql^consultaSQL)    
@@ -139,35 +147,51 @@ def main():
     
     consigna    = "Ejercicio 01.1.- Retornar Codigo y Nombre de los aeropuertos de Londres"
     consultaSQL = """
-                   
+                   SELECT Codigo, Nombre
+                   FROM aeropuerto
+                   WHERE Ciudad = 'Londres'
                   """
     imprimirEjercicio(consigna, [vuelo, aeropuerto, pasajero, reserva], consultaSQL, sql^consultaSQL)    
 
     # -----------
     consigna    = "Ejercicio 01.2.- ¿Qué retorna \n     SELECT DISTINCT Ciudad AS City \n     FROM aeropuerto \n     WHERE Codigo='ORY' OR Codigo='CDG'; ?"
     consultaSQL = """
-                   
+                   SELECT DISTINCT Ciudad AS City 
+                   FROM aeropuerto
+                   WHERE Codigo='ORY' OR Codigo='CDG'
                   """
     imprimirEjercicio(consigna, [vuelo, aeropuerto, pasajero, reserva], consultaSQL, sql^consultaSQL)    
-
+    # Retorna Paris
+    
     # -----------
     consigna    = "Ejercicio 01.3.- Obtener los números de vuelo que van desde CDG hacia LHR"
     consultaSQL = """
-                   
+                   SELECT Numero 
+                   FROM vuelo
+                   WHERE Origen='CDG' and Destino='LHR'
                   """
     imprimirEjercicio(consigna, [vuelo, aeropuerto, pasajero, reserva], consultaSQL, sql^consultaSQL)    
 
     # -----------
     consigna    = "Ejercicio 01.4.- Obtener los números de vuelo que van desde CDG hacia LHR o viceversa"
+    #%%
     consultaSQL = """
-                   
+                   SELECT DISTINCT Numero 
+                   FROM vuelo
+                   WHERE (Origen='lHR' AND Destino='CDG') OR (Origen='CDG' AND Destino='LHR')
                   """
+                  
+    res=sql^consultaSQL
+    print(res)
+    #%%
     imprimirEjercicio(consigna, [vuelo, aeropuerto, pasajero, reserva], consultaSQL, sql^consultaSQL)    
 
     # -----------
     consigna    = "Ejercicio 01.5.- Devolver las fechas de reservas cuyos precios son mayores a $200"
     consultaSQL = """
-                   
+                  SELECT Fecha
+                  FROM reserva
+                  WHERE Precio>200
                   """
     imprimirEjercicio(consigna, [vuelo, aeropuerto, pasajero, reserva], consultaSQL, sql^consultaSQL)    
 
@@ -191,7 +215,7 @@ def main():
     consigna    = """a1.- Listar a los alumnos que cursan BDs o TLENG"""
     
     consultaSQL = """
-                   
+                   SELECT 
                   """
 
     imprimirEjercicio(consigna, [alumnosBD, alumnosTLeng], consultaSQL, sql^consultaSQL)    
@@ -538,29 +562,65 @@ def main():
 
     consigna    = """a.- Listar los alumnos que en cada instancia obtuvieron una nota mayor al promedio de dicha instancia"""
     
+    
+    otraManera = """
+                     SELECT e1.nombre, e1.Instancia, e1.Nota
+                     FROM examen AS e1
+                     WHERE e1.Nota > (
+                         SELECT AVG(e2.Nota)
+                         FROM examen as e2
+                         WHERE e2.Instancia = e1.Instancia)
+                     ORDER BY Instancia ASC, Nota Desc
+                     """
+                     
+    
+    promedioPorInstancia = sql^"""
+                           SELECT Instancia, AVG(Nota) as Promedio
+                           FROM examen
+                           GROUP BY Instancia
+                           ORDER BY Instancia
+                           """
+    
     consultaSQL = """
+                  SELECT Nombre, Instancia
+                  
+                  FROM examen 
+                  
+                  GROUP BY Nombre, Instancia
+                  HAVING Nota>AVG(Nota)
 
                   """
+                  
+                  
 
 
-    imprimirEjercicio(consigna, [examen], consultaSQL, sql^consultaSQL)
+    imprimirEjercicio(consigna, [examen], otraManera, sql^otraManera)
 
 
     # -----------
     consigna    = """b.- Listar los alumnos que en cada instancia obtuvieron la mayor nota de dicha instancia"""
     
-    consultaSQL = """
+    otraManera = """
+                 SELECT e1.nombre, e1.Instancia, e1.Nota
+                 FROM examen AS e1
+                 WHERE e1.Nota = (
+                     SELECT MAX(e2.Nota)
+                     FROM examen as e2
+                     WHERE e2.Instancia = e1.Instancia)
+                 ORDER BY Instancia ASC, Nota Desc
+                 """
 
-                  """
-
-    imprimirEjercicio(consigna, [examen], consultaSQL, sql^consultaSQL)
+    imprimirEjercicio(consigna, [examen], otraManera, sql^otraManera)
 
 
     # -----------
     consigna    = """c.- Listar el nombre, instancia y nota sólo de los estudiantes que no rindieron ningún Recuperatorio"""
     
     consultaSQL = """
-
+                  SELECT e1.Nombre, e1.Instancia, e1.Nota 
+                  
+                  FROM examen
+                  
                   """
 
     imprimirEjercicio(consigna, [examen], consultaSQL, sql^consultaSQL)
@@ -575,8 +635,10 @@ def main():
     umbralNota = 7
     
     consultaSQL = """
-
-                  """
+                  SELECT Nombre, Instancia, Nota
+                  FROM examen
+                  WHERE Nota >$umbralNota
+                 """
 
     imprimirEjercicio(consigna, [examen], consultaSQL, sql^consultaSQL)
 
@@ -588,7 +650,9 @@ def main():
     consigna    = """a.- Listar todas las tuplas de Examen03 cuyas Notas son menores a 9"""
     
     consultaSQL = """
-
+                   SELECT *
+                   FROM examen03
+                   WHERE Nota < 9
                   """
 
     imprimirEjercicio(consigna, [examen03], consultaSQL, sql^consultaSQL)
@@ -597,7 +661,9 @@ def main():
     consigna    = """b.- Listar todas las tuplas de Examen03 cuyas Notas son mayores o iguales a 9"""
     
     consultaSQL = """
-
+                  SELECT *
+                  FROM examen
+                  WHERE Nota>=9
                   """
 
 
@@ -608,7 +674,13 @@ def main():
     consigna    = """c.- Listar el UNION de todas las tuplas de Examen03 cuyas Notas son menores a 9 y las que son mayores o iguales a 9"""
     
     consultaSQL = """
-
+                  SELECT * 
+                  FROM examen03
+                  WHERE Nota>9
+                  UNION
+                  SELECT *
+                  FROM examen03
+                  WHERE Nota>=9
                   """
 
 
@@ -619,7 +691,8 @@ def main():
     consigna    = """d1.- Obtener el promedio de notas"""
     
     consultaSQL = """
-
+                  SELECT AVG(Nota) as PROMEDIO
+                  FROM examen03
                   """
 
 
@@ -630,6 +703,8 @@ def main():
     consigna    = """d2.- Obtener el promedio de notas (tomando a NULL==0)"""
     
     consultaSQL = """
+                   SELECT AVG(CASE WHEN Nota IS NULL THEN 0 ELSE Nota END) AS Promedio
+                   FROM examen03
 
                   """
 
@@ -643,16 +718,23 @@ def main():
     consigna    = """a.- Mostrar para cada estudiante las siguientes columnas con sus datos: Nombre, Sexo, Edad, Nota-Parcial-01, Nota-Parcial-02, Recuperatorio-01 y , Recuperatorio-02"""
     
     # ... Paso 1: Obtenemos los datos de los estudiantes
+    datosEstudiantes = sql^consultaSQL
+    
     consultaSQL = """
-
+                    SELECT DISTINCT Nombre, Edad, Sexo
+                    FROM examen
                   """
 
     datosEstudiantes = sql^ consultaSQL
     
-    # ... Paso 2: Agregamos las notas del Parcial-01
+    # ... Paso 2: Agregamos las notas del Parcial_01
     consultaSQL = """
-
+                  SELECT de.*, e.Nota AS Parcial_01 
+                  FROM datosEstudiantes AS de
+                  LEFT OUTER JOIN examen AS e 
+                  ON de.Nombre = e.Nombre AND e.Instancia = 'Parcial-01'         
                   """
+                  # cuidado con colocar where luego del on 
 
     datosHastaParcial01 = sql^ consultaSQL
 
@@ -711,7 +793,8 @@ def main():
     consigna    = """a.- Consigna: En la descripción de los roles de los empleados reemplazar las ñ por ni"""
     
     consultaSQL = """
-
+                  SELECT empleado, replace(rol,'ñ', 'ni' ) AS rol
+                  FROM empleadoRol
                   """
 
     imprimirEjercicio(consigna, [empleadoRol], consultaSQL, sql^consultaSQL)
@@ -723,7 +806,9 @@ def main():
     consigna    = """a.- Consigna: Transformar todos los caracteres de las descripciones de los roles a mayúscula"""
     
     consultaSQL = """
-
+                  SELECT empleado, UPPER(rol) AS rol
+                  FROM empleadoRol
+                  
                   """
 
     imprimirEjercicio(consigna, [empleadoRol], consultaSQL, sql^consultaSQL)
@@ -732,7 +817,8 @@ def main():
     consigna    = """b.- Consigna: Transformar todos los caracteres de las descripciones de los roles a minúscula"""
     
     consultaSQL = """
-
+                      SELECT empleado, LOWER(rol) AS rol
+                      FROM empleadoRol
                   """
 
     imprimirEjercicio(consigna, [empleadoRol], consultaSQL, sql^consultaSQL)
