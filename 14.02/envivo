@@ -1,0 +1,178 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Feb 15 14:22:40 2024
+Materia: Laboratorio de Datos FCEyN-UBA
+Clase Visualizacion, Script Clase.
+Autor: Javier
+Fecha: 2024-02-15
+Descripcion: Mis primeros graficos
+@author: Estudiante
+"""
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib import ticker
+
+
+carpeta = ""
+
+# Cargamos los datos del zoo
+zoo = pd.read_csv(carpeta+"zoo.csv")
+
+# Grafico por defecto de asistencia al zoo en funcion del mes
+plt.bar(data=zoo, x="Mes", height="Asistencia")
+
+# Mejoramos el formato
+fig, ax = plt.subplots()
+
+plt.rcParams['font.family'] = 'sans-serif'
+
+ax.bar(data=zoo, x='Mes', height='Asistencia')
+ax.set_title('Asistencia mensual al zoo')
+ax.set_xlabel('Mes', fontsize='medium')
+ax.set_ylabel('Cantidad de asistencias', fontsize='medium')
+ax.set_ylim(0,25000)
+ax.yaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
+
+snow = pd.read_csv(carpeta+"snow.csv")
+
+
+plt.scatter(data = snow, x='PromedioTempMinima', y='PromedioNevadas')
+
+
+# Mejoramos el formato
+fig, ax = plt.subplots()
+
+ax.scatter(data = snow,
+           x='PromedioTempMinima',
+           y='PromedioNevadas',
+           s=8) #Tamaño del punto, s de size
+
+
+ax.set_title('Promedio de Nevadas vs Promedio de Temp.Minima')
+ax.set_xlabel('Promedio de Temperaturas Minimas ("C)', fontsize='medium')
+ax.set_ylabel('Promedio de Nevadas (Pulgadas)', fontsize='medium')
+ax.set_xlim(0,26)
+ax.set_ylim(-2,120)
+
+
+# Cargamos los datos de airport 
+airport = pd.read_csv(carpeta+"airport.csv")
+
+plt.scatter(data=airport,
+             x='WaitTime',
+             y='ParkingCost',
+             s='AnnualEnplanements' )
+
+# Mejoramos el formato
+fig, ax = plt.subplots()
+
+plt.rcParams['font.family'] = 'sans-serif'
+
+tamanoBurbuja = 30
+
+ax.scatter(data= airport,
+           x='WaitTime',
+           y='ParkingCost',
+           s=airport['AnnualEnplanements']*tamanoBurbuja)
+
+
+ax.set_title('Relacion entre 3 variables')
+ax.set_xlabel('Tiempo de espera TSA (min)', fontsize='medium')
+ax.set_ylabel('Tarifa de estacionamiento mas economica ($)', fontsize='medium')
+ax.set_xlim(0,12)
+ax.set_ylim(0,25)
+
+
+ax.xaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.2f}"))
+ax.yaxis.set_major_formatter(ticker.StrMethodFormatter("${x:,.2f}"))
+
+
+
+# Cargamos los datos de Cheetah ---------------
+cheetah = pd.read_csv(carpeta+'cheetah.csv')
+
+plt.scatter(data= cheetah,
+           x='Anio',
+           y='Ventas'
+           )
+
+# Mejoramos el formato
+fig, ax = plt.subplots()
+
+plt.rcParams['font.family'] = 'sans-serif'
+
+ax.plot('Anio', 'Ventas', data=cheetah, marker='o')
+
+ax.set_title('Venta de la compania Cheetah Sports')
+ax.set_xlabel('Anio', fontsize='medium')
+ax.set_ylabel('Ventas (millones en $)', fontsize='medium')
+ax.set_xlim(0,12)
+ax.set_ylim(0,250)
+
+
+
+
+# Cargamos los datos de Cheetah Region-----------------
+cheetahRegion = pd.read_csv(carpeta+'cheetahRegion.csv')
+
+# Grafico por defecto
+fig, ax = plt.subplots()
+
+ax.plot('Anio', 'regionEste', data=cheetahRegion)
+ax.plot('Anio', 'regionOeste', data=cheetahRegion)
+
+
+
+# Mejoramos el formato
+fig, ax = plt.subplots()
+
+plt.rcParams['font.family'] = 'sans-serif'
+
+
+ax.plot('Anio', 'regionEste', data=cheetahRegion,
+             marker='.',
+             linestyle='-',
+             linewidth=0,5,
+             label ='Region Este')
+             
+
+ax.plot('Anio', 'regionOeste', data=cheetahRegion,
+             marker='.',
+             linestyle='.',
+             linewidth=0,5,
+             label ='Region Oeste')
+
+             
+ax.set_title('Venta de la compania Cheetah Sports segun Region')
+ax.set_xlabel('Anio', fontsize='medium')
+ax.set_ylabel('Ventas (millones en $)', fontsize='medium')
+ax.set_xlim(0,12)
+ax.set_ylim(0,140)
+
+ax.legend()  # Muestra la leyenda
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
