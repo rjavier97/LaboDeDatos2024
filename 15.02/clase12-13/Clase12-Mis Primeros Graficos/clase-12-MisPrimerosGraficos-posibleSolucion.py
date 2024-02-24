@@ -21,7 +21,7 @@ import seaborn as sns           # Para graficar histograma
 def main():
 
     # Carpeta donde se encuentran los archivos a utilizar
-    carpeta = "~/Downloads/clase-12/scriptClase/"
+    carpeta = ""
     
 
     # # # # # # # # # # # # # # # # # # # # # # # # 

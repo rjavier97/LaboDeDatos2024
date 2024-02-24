@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt # Para graficar series multiples
 def main():
 
     # Carpeta donde se encuentran los archivos a utilizar
-    carpeta = "~/Downloads/clase-12/scriptClase/"
+    carpeta = ""
     
     # # # # # # # # # # # # # # # # # # # # # # # # 
     # #   Gaseosas
