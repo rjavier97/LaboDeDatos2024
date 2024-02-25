@@ -42,7 +42,7 @@ len(secciones['sede_desc_castellano'].unique())   # da 202
 
 redes_sociales = pd.DataFrame(columns=['id_sede','url'])
 
-Sedes = pd.DataFrame(columns=['id_sede','nom_sede','codigo_territorio'])
+Sedes = pd.DataFrame(columns=['id_sede','nom_sede','codigo_pais'])
 
 secciones  = pd.DataFrame(columns=['id_sede','nom_seccion'])
 
@@ -59,26 +59,22 @@ Region['nom_region'] = sorted(datos_sedes['region_geografica'].unique())
 Region['id_region'] = np.array(range(1,len(Region['nom_region'])+1))
 
 pbi2022 = sql^"""
-               SELECT DISTINCT codigo_pais, nom_territorio, pbi.pbi, Region.id_region
+               SELECT DISTINCT Paises.codigo_pais, nom_territorio, pbi.pbi, Region.id_region
                FROM Paises
                LEFT OUTER JOIN GPD_2022 AS pbi
                ON Paises.codigo_pais = pbi.Country_code
                LEFT OUTER JOIN datos_sedes
-               ON datos_sedes.pais_iso_3 = codigo_pais
+               ON datos_sedes.pais_iso_3 = Paises.codigo_pais
                LEFT OUTER JOIN Region 
-               ON nom_region = datos_sedes.region_geografica              
+               ON Region.nom_region = datos_sedes.region_geografica              
                """
 
 Paises = pbi2022
 
-Sedes[['id_sede','nom_sede','codigo_territorio']] = datos_sedes[['sede_id','sede_desc_castellano','pais_iso_3']]
+Sedes[['id_sede','nom_sede','codigo_pais']] = datos_sedes[['sede_id','sede_desc_castellano','pais_iso_3']]
                
 secciones[['id_sede','nom_seccion']] = secciones_original[['sede_id','sede_desc_castellano']]
 
-secciones = sql^"""
-                SELECT 
-                FROM secciones
-                """
 
 sql^"""
     SELECT count(sede_id)
@@ -106,4 +102,5 @@ redes_sociales = sql^"""
 # =============================================================================
 #  h)     
 # =============================================================================
+# i)
 
