@@ -358,14 +358,13 @@ plt.xticks(rotation=60, ha='right', fontsize=8)  # 'ha' es para alineación hori
 plt.bar_label(bars, fmt='%d', fontsize=9, label_type='edge', color='black', weight='bold')
 
 # Agregar titulo y limites al eje y
-plt.title('Cantidad de Sedes por Región')    
+plt.title('Cantidad de Países con Sedes por Región')    
 plt.ylim(0,26)
 plt.gca().spines['right'].set_visible(False) # se borra linea derecha de margen
 plt.gca().spines['top'].set_visible(False) # se borra linea debajo del titulo
 plt.tick_params(axis='y', left=False) # se borra tick de valores del eje y
 
 
-# =============================================================================
 # Conclusion: 
 # Como era de esperarse, nuestro continente americano es el que tiene
 # mayor cantidad de sedes argentinas (28) en dichos paises que corresponden a America.
@@ -376,7 +375,9 @@ plt.tick_params(axis='y', left=False) # se borra tick de valores del eje y
 # El continente africano cuenta con muy pocas sedes argentinas, pero no tanto como
 # Oceania que cuenta con solo 2 sedes argentinas. 
 # Seria interesante que Argentina lograra mayor contacto con el continente de Oceania 
-# =============================================================================
+
+
+
 
 
 
