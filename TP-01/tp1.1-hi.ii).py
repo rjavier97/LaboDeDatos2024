@@ -168,6 +168,11 @@ LEFT OUTER JOIN promedio_seccionesxsede
 ON promedio_seccionesxsede.nom_pais = paises.nom_pais
 ORDER BY cantidad_sedes.sedes DESC, paises.nom_pais 
 """
+ejercicio1= sql^"""
+SELECT *
+FROM ejercicio1
+WHERE Pbi_per_Capita_2022_U$S IS NOT NULL
+"""
 
 # Conclusion de lo observado: En principio, se observan resultados muy disparejos si se
 # intentan relacionar los datos de sedes, secciones y pbi.
@@ -179,17 +184,29 @@ ORDER BY cantidad_sedes.sedes DESC, paises.nom_pais
 # es la tabla de consulta "ejercicio2" 
 
 
+# ra = sql^"""SELECT DISTINCT r.nom_region AS 'Región geográfica', 
+#                 count(*) AS 'Países Con Sedes Argentinas', 
+#                 ROUND(AVG(p.pbi)) As 'Promedio PBI per Cápita 2022 (Millones U$S)'
+# from sedes as s
+# inner join paises as p 
+# on s.codigo_pais = p.codigo_pais
+# inner join regiones as r 
+# on p.id_region = r.id_region
+# GROUP by r.nom_region
+# order by AVG(p.pbi) DESC """
 
-regiones_sedes_arg= sql^"""
-SELECT regiones.nom_region AS Region_geografica, SUM(ejercicio1.sedes) AS Paises_Con_Sedes_Argentinas
-FROM ejercicio1 
-LEFT OUTER JOIN paises 
-ON paises.nom_pais = ejercicio1.Pais
-LEFT OUTER JOIN regiones
-ON regiones.id_region = paises.id_region 
-WHERE ejercicio1.sedes >0
-GROUP BY regiones.nom_region
-"""
+
+
+# regiones_sedes_arg= sql^"""
+# SELECT regiones.nom_region AS Region_geografica, COUNT(ejercicio1.sedes) AS Paises_Con_Sedes_Argentinas
+# FROM ejercicio1 
+# LEFT OUTER JOIN paises 
+# ON paises.nom_pais = ejercicio1.Pais
+# LEFT OUTER JOIN regiones
+# ON regiones.id_region = paises.id_region 
+# WHERE ejercicio1.sedes >0
+# GROUP BY regiones.nom_region
+# """
 
 promedio_pbi = sql^"""
 SELECT regiones.nom_region AS Region_geografica, ejercicio1.*
@@ -199,23 +216,15 @@ ON ejercicio1.Pais = paises.nom_pais
 LEFT OUTER JOIN regiones
 ON regiones.id_region = paises.id_region
 """
-promedio_pbi = sql^"""
+ejercicio2 = sql^"""
 SELECT promedio_pbi.Region_geografica, 
-ROUND(AVG(promedio_pbi.Pbi_per_Capita_2022_U$S),2) AS Pbi_per_Capita_2022_U$S
+COUNT(*) AS Paises_Con_Sedes_Argentinas,
+ROUND(AVG(promedio_pbi.Pbi_per_Capita_2022_U$S),2) AS Promedio_Pbi_per_Capita_2022_U$S
 FROM promedio_pbi
-WHERE promedio_pbi.sedes>0
-GROUP BY Region_geografica
+GROUP BY promedio_pbi.Region_geografica
+ORDER BY promedio_Pbi_per_Capita_2022_U$S DESC
 """
 
-ejercicio2 = sql^"""
-SELECT regiones_sedes_arg.Region_geografica,
-regiones_sedes_arg.Paises_Con_Sedes_Argentinas,
-promedio_pbi.Pbi_per_Capita_2022_U$S AS Promedio_Pbi_per_Capita_2022_U$S
-FROM regiones_sedes_arg
-INNER JOIN promedio_pbi
-ON promedio_pbi.Region_geografica = regiones_sedes_arg.Region_geografica
-ORDER BY Promedio_Pbi_per_Capita_2022_U$S DESC
-"""
 
 # Conclusion de lo observado: Las 2 regiones con menos sedes argentinas, 
 # en este caso Oceania y America del Norte, y las 2 regiones con mas sedes argentinas, 
@@ -225,6 +234,76 @@ ORDER BY Promedio_Pbi_per_Capita_2022_U$S DESC
 # con respecto al resto del promedio de las demas regiones
 
 
+
+#ejercicio III)
+"""
+IMPORTANTE: Para este ejercicio uso dataframe "reporte" generado en el ejercicio 4. 
+
+"""
+# ejercicio IV
+
+
+reporte = sql^ """
+          SELECT id_sede AS sede_id  , url
+          FROM redes_sociales
+          WHERE url LIKE 'http%' OR url LIKE 'www%' OR url LIKE 'twitter%' OR url LIKE 'Twitter%'
+                                OR url LIKE 'facebook%' OR url LIKE 'Facebook%' OR url LIKE 'instagram%'
+                                OR url LIKE 'Instagram%' OR url LIKE 'linkedin%'    
+"""
+reporte = sql^ """
+          SELECT sede_id ,
+          CASE 
+              WHEN url LIKE '%twitter%' OR url LIKE '%Twitter%' THEN 'Twitter'
+              WHEN url LIKE '%instagram%' OR url LIKE '%Instagram%' THEN 'Instagram'
+              WHEN url LIKE '%facebook%' OR url LIKE '%Facebook%' THEN 'Facebook'
+              WHEN url LIKE '%linkedin%' OR url LIKE '%Linkedin%' THEN 'Linkedin'
+              WHEN url LIKE '%flickr%' OR url LIKE '%Flickr%' THEN 'Flickr'
+              WHEN url LIKE '%youtube%' OR url LIKE '%Youtube%' THEN 'Youtube'
+              ELSE ''
+              END AS Red_social , url
+              FROM reporte 
+                """
+reporte = sql^ """
+            SELECT pais_castellano AS Pais , r.sede_id AS Sede , Red_social , url AS URL
+            FROM reporte AS r
+            LEFT JOIN datos_sedes AS d
+            ON r.sede_id = d.sede_id
+                """
+#Ordeno                
+reporte = sql^ """  
+            SELECT *
+            FROM reporte
+            ORDER BY Pais ASC , Sede ASC , Red_social ASC , URL ASC
+                """
+
+
+
+
+res = sql^"""
+            SELECT Pais , Red_social , COUNT(Red_social) AS nro_redes
+            FROM reporte
+            GROUP BY Pais , Red_social
+            """
+tabla_h_III = sql^"""
+        SELECT Pais , COUNT(Pais) AS nro_redes
+        FROM res
+        GROUP BY Pais
+        ORDER BY Pais ASC , nro_redes ASC
+
+        """
+
+
+
+
+#ejercicio IV)
+# 
+# Genero un nuevo data frame llamado reporte el cual es igual a redes_sociales solo que no contiene las tuplas con urls de mala calidad
+# Se consideraron urls de mala calidad aquellos que no empezaban con http , www o alguna red social seguida de un ".com".
+# Ejemplo instagram.com. 
+# 
+
+
+
 # =============================================================================
 # i) Mostrar, utilizando herramientas de visualizacion, la siguiente informacion: 
 # 
@@ -232,15 +311,21 @@ ORDER BY Promedio_Pbi_per_Capita_2022_U$S DESC
 #    Ordenados de manera decreciente por dicha cantidad.
 # =============================================================================
 
+sedesXregion = sql^"""
+SELECT Region_geografica, SUM(sedes) as Cantidad_Sedes
+FROM promedio_pbi
+GROUP BY Region_geografica
+"""
+
 # Dataframe de ejercicio2 modificado para que aparesca ordenado en el grafico
-ejercicio2ord = ejercicio2.sort_values('Paises_Con_Sedes_Argentinas', ascending=False)
+sedesXregionOrd = sedesXregion.sort_values('Cantidad_Sedes', ascending=False)
 
 #  lista de 9 colores para las regiones
-colores = ['blue', 'green', 'purple', 'blue', 'blue', 'green', 'orange', 'orange', 'gray']
+colores = ['blue', 'green', 'purple', 'blue', 'blue', 'orange', 'green', 'orange', 'gray']
 
 # Crea el grafico de barras
-bars = plt.bar(ejercicio2ord['Region_geografica'],
-        ejercicio2ord['Paises_Con_Sedes_Argentinas'],
+bars = plt.bar(sedesXregionOrd['Region_geografica'],
+        sedesXregionOrd['Cantidad_Sedes'],
         color=colores)
 
 #Linea punteada de cada valor en y 
@@ -255,9 +340,12 @@ plt.bar_label(bars, fmt='%d', fontsize=9, label_type='edge', color='black', weig
 # Agregar titulo y limites al eje y
 plt.title('Cantidad de Sedes por Región')    
 plt.ylim(0,50)
-plt.gca().spines['right'].set_visible(False) # se borra linea derecha de margen
+plt.gca().spines['left'].set_visible(False) # se borra linea derecha de margen
 plt.gca().spines['top'].set_visible(False) # se borra linea debajo del titulo
 plt.tick_params(axis='y', left=False) # se borra tick de valores del eje y
+plt.gca().set_facecolor('#D7DBDD') # Agregar fondo de color al gráfico
+plt.gcf().set_facecolor('#D7DBDD') # Agregar fondo de color al gráfico
+
 
 
 # bars = plt.bar(ejercicio2ord['Region_geografica'], 
@@ -268,15 +356,16 @@ plt.tick_params(axis='y', left=False) # se borra tick de valores del eje y
 # =============================================================================
 # Conclusion: 
 # Como era de esperarse, nuestro continente americano es el que tiene
-# mayor cantidad de sedes argentinas, que cuenta con 75 sedes.
-# En segundo lugar tenemos a Europa con 43 sedes y al parecer se le da primero 
-# mayor relevancia diplomatica al sector de Europa Occidental 
-# que a Europa Central y Oriental con una aplica diferencia de sedes.
+# mayor cantidad de sedes argentinas (28) en dichos paises que corresponden a America.
+# Sin embargo, tenemos casi la misma cantidad de sedes argentinas en 
+# el continente Europeo con 26.
+# Al parecer se le da primero mayor relevancia diplomatica al sector de Europa Occidental 
+# que a Europa Central y Oriental.
 # El continente africano cuenta con muy pocas sedes argentinas, pero no tanto como
-# Oceania que cuenta con solo 3 sedes argentinas. 
+# Oceania que cuenta con solo 2 sedes argentinas. 
 # Seria interesante que Argentina lograra mayor contacto con el continente de Oceania 
-# =============================================================================
- 
+
+
 
 #EJERCICIO i III
 #Grafico PBI y numero de sedes argentinas por pais.
