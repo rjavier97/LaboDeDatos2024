@@ -145,7 +145,7 @@ def main():
     ax.set_title('Ventas de la compañía Cheetah Sports')
     ax.set_xlabel('Año', fontsize='medium')                       
     ax.set_ylabel('Ventas (millones de $)', fontsize='medium')    
-    ax.set_xlim(0, 12)
+    ax.set_xlim(0, 11)
     ax.set_ylim(0, 250)
     
 

@@ -19,7 +19,7 @@ import seaborn as sns
 def main():
 
     # Carpeta donde se encuentran los archivos a utilizar
-    carpeta = "~/Downloads/"
+    carpeta = ""
     
     # # # # # # # # # # # # # # # # # # # # # # # # 
     # #   ventaCasas

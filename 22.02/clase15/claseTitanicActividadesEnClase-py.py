@@ -15,6 +15,8 @@ from IPython.display import display
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from   matplotlib import ticker   # Para agregar separador de miles
+from inline_sql import sql, sql_val
 import seaborn as sns
 
 
@@ -25,9 +27,40 @@ import seaborn as sns
 
 df_titanic, X, y = utils.cargar_datos('titanic_training.csv') # X tiene todas las columnas del dataframe menos la que queremos predecir,
                                         # Y tiene la columna que indica si sobrevivieron
+df_titanic = sql^"""SELECT * FROM df_titanic"""
+
+supervivientes = sql^"""
+SELECT Sex, SUM(Survived) AS sobrevivientes
+FROM df_titanic
+GROUP BY Sex  """
+
+fallecieron = sql^""" SELECT df.Sex, Count(df.Survived) AS fallecieron
+FROM df_titanic as df 
+WHERE df.Survived = 0 
+GROUP BY df.Sex
+"""
+resumenTitanic = sql^"""
+SELECT supervivientes.*, fallecieron.fallecieron
+FROM supervivientes 
+INNER JOIN fallecieron 
+ON supervivientes.Sex = fallecieron.Sex
+"""                        
+                        
 df_titanic.head()
 
+# Agrupar y contar la cantidad de sobrevivientes y fallecidos por sexo
+resultados = df_titanic.groupby(['Sex', 'Survived']).size().unstack()
 
+# Crear el gráfico de barras
+ax = resultados.plot(kind='bar', stacked=True, color=['red', 'green'], alpha=0.7)
+
+# Personalizar el gráfico
+ax.set_title('Sobrevivientes y Fallecidos por Sexo')
+ax.set_xlabel('Sexo')
+ax.set_ylabel('Cantidad')
+ax.set_ylim(0,100,10)
+ax.set_yticks(range(0,105,10))
+ax.legend(['Fallecido', 'Sobreviviente'], loc='upper right')
 # ### Exploren estos datos!! Ideas: histogramas, pairplots, etc 
 
 # In[3]:
@@ -43,7 +76,9 @@ df_titanic.head()
 
 def clasificador_naive_instance(x):
     ## Completen con sus reglas por ej
-    if x.Pclass == 1 :
+    r1= x.Sex == 'female' and x.Age >2
+    r2= (x.Sex == 'male' and x.Age <= 17 )
+    if r1 or r2 :
         return True
     else:
         return False
@@ -99,6 +134,20 @@ X = utils.encode_sex_column(X)
 
 
 # planta tu árbol aquí
+from sklearn.tree import DecisionTreeClassifier,plot_tree, export_graphviz
+
+arbol = DecisionTreeClassifier(criterion="entropy",
+max_depth= 2)
+arbol.fit(X, y) #Entrenamiento
+prediction = arbol.predict(X) #Generamos las predicciones
+# Generamos el grafo del árbol
+import graphviz
+dot_data = export_graphviz(arbol, out_file=None, feature_names= X.columns,
+class_names= ["Not Survived", "Survived"],
+filled=True, rounded=True,
+special_characters=True)
+graph = graphviz.Source(dot_data) #Armamos el grafo
+graph.render("titanic", format= "png") #Guardar la imágen
 
 
 # #### Generamos el gráfico de nuestro árbol
