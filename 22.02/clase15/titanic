@@ -2,7 +2,7 @@ digraph Tree {
 node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
 edge [fontname="helvetica"] ;
 0 [label=<Sex &le; 0.5<br/>entropy = 0.913<br/>samples = 183<br/>value = [60, 123]<br/>class = Survived>, fillcolor="#9acdf2"] ;
-1 [label=<Age &le; 3.0<br/>entropy = 0.359<br/>samples = 88<br/>value = [6, 82]<br/>class = Survived>, fillcolor="#47a4e7"] ;
+1 [label=<Fare &le; 10.481<br/>entropy = 0.359<br/>samples = 88<br/>value = [6, 82]<br/>class = Survived>, fillcolor="#47a4e7"] ;
 0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
 2 [label=<entropy = 0.0<br/>samples = 2<br/>value = [2, 0]<br/>class = Not Survived>, fillcolor="#e58139"] ;
 1 -> 2 ;
