@@ -27,7 +27,7 @@ import seaborn as sns
 
 df_titanic, X, y = utils.cargar_datos('titanic_training.csv') # X tiene todas las columnas del dataframe menos la que queremos predecir,
                                         # Y tiene la columna que indica si sobrevivieron
-df_titanic = sql^"""SELECT * FROM df_titanic"""
+df_titanicSQL = sql^"""SELECT * FROM df_titanic"""
 
 supervivientes = sql^"""
 SELECT Sex, SUM(Survived) AS sobrevivientes
@@ -58,7 +58,7 @@ ax = resultados.plot(kind='bar', stacked=True, color=['red', 'green'], alpha=0.7
 ax.set_title('Sobrevivientes y Fallecidos por Sexo')
 ax.set_xlabel('Sexo')
 ax.set_ylabel('Cantidad')
-ax.set_ylim(0,100,10)
+ax.set_ylim(0,105)
 ax.set_yticks(range(0,105,10))
 ax.legend(['Fallecido', 'Sobreviviente'], loc='upper right')
 plt.show()
@@ -108,6 +108,7 @@ def score(y, y_pred):
 
 
 y_predict = clasificador_naive(X)
+y_predict
 score(y_predict, y)
 
 
@@ -137,21 +138,25 @@ X = utils.encode_sex_column(X)
 # planta tu árbol aquí
 from sklearn.tree import DecisionTreeClassifier,plot_tree, export_graphviz
 from sklearn import tree  
-# para ver el arbol ejecutar linea 138 y ejecutar en otra linea "tree.plot_tree(arbol)
+# para ver el arbol ejecutar "from sklearn import tree" y ejecutar en otra linea "tree.plot_tree(arbol)
 
 arbol = DecisionTreeClassifier(criterion="entropy",
-max_depth= 2)
+max_depth= 4)
 arbol.fit(X, y) #Entrenamiento
 prediction = arbol.predict(X) #Generamos las predicciones
 # Generamos el grafo del árbol
-import graphviz
-dot_data = export_graphviz(arbol, out_file=None, feature_names= X.columns,
-class_names= ["Not Survived", "Survived"],
-filled=True, rounded=True,
-special_characters=True)
-graph = graphviz.Source(dot_data) #Armamos el grafo
-graph.render("titanic", format= "png") #Guardar la imágen
-tree.plot_tree(arbol)
+plt.figure(figsize=(20,10))
+plot_tree(arbol, filled=True, feature_names=X.columns, class_names=["Not Survived", "Survived"], rounded=True)
+plt.show()
+# import graphviz
+# dot_data = export_graphviz(arbol, out_file=None, feature_names= X.columns,
+# class_names= ["Not Survived", "Survived"],
+# filled=True, rounded=True,
+# special_characters=True)
+# graph = graphviz.Source(dot_data) #Armamos el grafo
+# graph.view()
+# graph.render("titanic", format= "png") #Guardar la imágen
+# tree.plot_tree(graph)
 
 
 # #### Generamos el gráfico de nuestro árbol
