@@ -61,6 +61,7 @@ ax.set_ylabel('Cantidad')
 ax.set_ylim(0,100,10)
 ax.set_yticks(range(0,105,10))
 ax.legend(['Fallecido', 'Sobreviviente'], loc='upper right')
+plt.show()
 # ### Exploren estos datos!! Ideas: histogramas, pairplots, etc 
 
 # In[3]:
@@ -135,6 +136,8 @@ X = utils.encode_sex_column(X)
 
 # planta tu árbol aquí
 from sklearn.tree import DecisionTreeClassifier,plot_tree, export_graphviz
+from sklearn import tree  
+# para ver el arbol ejecutar linea 138 y ejecutar en otra linea "tree.plot_tree(arbol)
 
 arbol = DecisionTreeClassifier(criterion="entropy",
 max_depth= 2)
@@ -148,6 +151,7 @@ filled=True, rounded=True,
 special_characters=True)
 graph = graphviz.Source(dot_data) #Armamos el grafo
 graph.render("titanic", format= "png") #Guardar la imágen
+tree.plot_tree(arbol)
 
 
 # #### Generamos el gráfico de nuestro árbol
