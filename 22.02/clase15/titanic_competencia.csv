@@ -1,4 +1,4 @@
-,PassengerId,Pclass,Sex,Age,SibSp,Parch,Fare
+PassengerId,Pclass,Sex,Age,SibSp,Parch,Fare
 0,1128,1,male,64.0,1,0,75.25
 1,1299,1,male,50.0,1,1,211.5
 2,1214,2,male,26.0,0,0,13.0

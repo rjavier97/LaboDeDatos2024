@@ -15,7 +15,7 @@ from IPython.display import display
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from   matplotlib import ticker   # Para agregar separador de miles
+from matplotlib import ticker   # Para agregar separador de miles
 from inline_sql import sql, sql_val
 import seaborn as sns
 

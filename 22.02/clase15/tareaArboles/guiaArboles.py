@@ -10,8 +10,47 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np 
 
+# =============================================================================
+# 
+# =============================================================================
+def cargar_datos(file, filter = True):
+    df = pd.read_csv(file, index_col=0)
+    df = df.dropna()
+    if filter: 
+        df = df.drop(columns = ["Name", "Ticket",  "Cabin", "Embarked"])
+    X = df.drop(columns = ["Survived"]) 
+    y = df.Survived
+    return df, X, y
+
+def clasificador_naive_instance(x):
+    ## Completen con sus reglas por ej
+    r1= x.Sex == 'female' and x.Age >2
+    r2= (x.Sex == 'male' and x.Age <= 17 )
+    if r1 or r2 :
+        return True
+    else:
+        return False
 
 
+# In[4]:
+
+
+def clasificador_naive(X):
+    y_predict = []
+    for x in X.itertuples(index=False): 
+        y_predict.append(clasificador_naive_instance(x))
+    return y_predict
+
+
+# In[5]:
+
+
+def score(y, y_pred):
+    print("Le pego a " + str(np.sum(y==y_pred)) + " de " + str(len(y)))
+
+# =============================================================================
+# 
+# =============================================================================
 
 iris = datasets.load_iris()
 iris_df = pd.DataFrame(iris['data'], columns=iris.feature_names)
@@ -52,7 +91,3 @@ plt.xlabel('Largo del Sépalo')
 plt.ylabel('Ancho del Sépalo')
 plt.title('Scatter Plot: Largo del Sépalo vs. Ancho del Sépalo')
 plt.show()
-
-
-
-

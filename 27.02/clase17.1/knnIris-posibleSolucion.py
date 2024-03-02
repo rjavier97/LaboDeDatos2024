@@ -25,10 +25,6 @@ from sklearn.model_selection import train_test_split
 iris     = load_iris(as_frame = True)
 dataIris = iris.frame # Iris en formato dataframe (5 variables)
 
-# 0 = setosa
-# 1 = versicolor 
-# 2 = virginica
-
 # Para comprender la variable target armamos un diccionario con equivalencia
 print(iris.target_names)
 diccionario = dict(zip( [0,1,2], iris.target_names)) # Diccionario con equivalencia
@@ -48,14 +44,13 @@ diccionario = dict(zip( [0,1,2], iris.target_names)) # Diccionario con equivalen
 # Declaramos las variables
 X = dataIris.iloc[:,0:4]     # X = 4 variables predictoras (sepalo/petalo, ancho/alto)
 Y = dataIris.iloc[:,  4]     # Y = 1 variable a predecir, la clase de flor (en formato numerico)
-k = 5     # Cantidad de vecinos
+k = 5             # Cantidad de vecinos
 
 # Declaramos el tipo de modelo
 neigh = KNeighborsClassifier(n_neighbors = k) 
 
 # Entrenamos el modelo
 neigh.fit(X, Y) 
-
 
 #################################################
 ## Evaluacion del modelo contra dataIris completo
@@ -145,3 +140,8 @@ plt.xlabel('Cantidad de vecinos')
 plt.ylabel('R^2')
 plt.xticks(valores_k)
 plt.ylim(0.90,1.00)
+
+
+
+
+
