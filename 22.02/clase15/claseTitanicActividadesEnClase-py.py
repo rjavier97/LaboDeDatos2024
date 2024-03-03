@@ -143,9 +143,9 @@ from sklearn import tree
 arbol = DecisionTreeClassifier(criterion="entropy",
                                max_depth= 2)
 arbol.fit(X, y) #Entrenamiento
-prediction = arbol.predict(X) #Generamos las predicciones
-prediction
-arbol.score(X,y)
+# prediction = arbol.predict(X) #Generamos las predicciones
+# prediction
+# arbol.score(X,y)
 # Generamos el grafo del árbol
 plt.figure(figsize=(20,10))
 plot_tree(arbol, 
