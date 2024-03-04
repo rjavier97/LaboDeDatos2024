@@ -16,6 +16,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from inline_sql import sql, sql_val
 
+
+
+
+
 #%%
 ####################################################################
 ########  DEFINICION DE FUNCIONES AUXILIARES
@@ -35,8 +39,27 @@ def plotRectaRegresion(slope, intercept):
 ########  MAIN
 ####################################################################
 # Cargamos el archivo 
-carpeta = '~/Downloads/'
+carpeta = ''
 data_train = pd.read_csv(carpeta+"datos_roundup.txt", sep=" ", encoding='utf-8')
+data_trainSQL = sql^"""SELECT * from data_train"""
+
+promedioX = data_train["RU"].mean() # promedio de los valores de RU
+promedioY = data_train["ID"].mean() # promedio de los valores de ID
+
+listaX = data_train['RU'].astype(float).tolist() # lista con los valores de RU
+listaY = data_train['ID'].astype(float).tolist() # lista con los valores de ID
+# listapromX = [0,25,50,87.5,130,175,221.43,287.5,366.6,455,572.7]
+# listapromY = [104,105,107.43,109.825,92.43,96,114.6, 117.765,120.3,123.6,127.94]
+
+b1 = 0
+for i in range (0,11):
+    numerador = (listaX[i]-promedioX)*(listaY[i]-promedioY)
+    denominador = (listaX[i] - promedioX) **2
+    b1 = b1 + (numerador/denominador)
+
+b0 = (promedioY) - (b1*promedioX)   
+    
+    
 
 
 # ----------------------------------
