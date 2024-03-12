@@ -30,9 +30,7 @@ def cargar_datos(file, filter = True):
     return df, X, y
 
 def clasificador_naive_instance(x):
-    ## Completen con sus reglas por ej
-    r1= x.Sex == 'female' and x.Age >2
-    r2= (x.Sex == 'male' and x.Age <= 17 )
+    ## Completen con sus reglas por ej)
     if r1 or r2 :
         return True
     else:

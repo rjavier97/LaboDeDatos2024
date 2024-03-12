@@ -23,3 +23,5 @@
 14-- Ejecutar el código seleccionado: Resaltar+Shift+Enter
 15-- Ejecutar linea por linea: F9
 
+16-- Ejecutar por bloque (escribr los limites con #%%): Shift+Enter
+
